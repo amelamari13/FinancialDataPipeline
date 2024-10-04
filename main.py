@@ -1,5 +1,9 @@
 from data_ingestion.extract_financial_data import extract_data_yahoo
 from data_ingestion.web_scraping import *
+from data_processing.data_cleaning import clean_data, convert_date_format
+from data_processing.data_transformation import transform_data
+from data_storage.database import connect_to_db, insert_data, get_all_transactions
+from pyspark.sql.functions import col, count, when
 
 
 def main():
@@ -24,6 +28,26 @@ def main():
     print("Economic indicators :\n")
     for indicator in economic_indicators.keys():
         print(indicator, " : ", economic_indicators[indicator])
+
+    print("\nCleaning data\n")
+    apple_data_cleaned = clean_data(apple_data)
+    print(apple_data_cleaned)
+
+    print("\nTransform data\n")
+    apple_data_spark = transform_data(apple_data_cleaned)
+    #apple_data_spark.head(10)
+    #transform_data(apple_data_cleaned).show()
+
+
+
+    #apple_data_spark.show(10)
+
+    # print("\nStorage in database\n")
+    # conn = connect_to_db()
+    # insert_data(conn, apple_data_spark, 'apple_stock_data')
+    # get_all_transactions()
+    # conn.close()
+
 
 
 if __name__ == "__main__":
