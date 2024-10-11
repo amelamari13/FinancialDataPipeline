@@ -6,5 +6,6 @@ def test_extract_data_yahoo():
     df = extract_data_yahoo('AAPL', period='1y')
     assert not df.empty, "Data should not be empty"
 
+
 if __name__ == "__main__":
     test_extract_data_yahoo()

@@ -7,13 +7,11 @@ def transform_data(df):
     # Créer une session Spark
     spark = SparkSession.builder \
         .appName("FinancialData") \
-        .config("spark.driver.memory", "4g") \
-        .config("spark.executor.memory", "4g") \
+        .config("spark.sql.execution.arrow.pyspark.enabled", "true") \
         .getOrCreate()
 
     # Convertir le DataFrame Pandas en DataFrame PySpark
     spark_df = spark.createDataFrame(df)
-    spark_df.show(10)
 
     # Vérifier que les colonnes nécessaires existent
     required_columns = ["Open", "Close", "Date"]

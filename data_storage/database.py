@@ -40,7 +40,7 @@ def get_all_transactions():
     conn = connect_to_db()
     cur = conn.cursor()
 
-    cur.execute('SELECT * FROM transactions')
+    cur.execute('SELECT * FROM transactions LIMIT 10')
     rows = cur.fetchall()
 
     conn.close()
