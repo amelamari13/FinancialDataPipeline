@@ -1,11 +1,11 @@
 from data_analysis.analysis import analyze_stock_performance, find_correlations
-from data_analysis.visualization import plot_stock_data, plot_volume_trends
+from data_analysis.visualization import plot_data
 from data_ingestion.extract_financial_data import extract_data_yahoo
 from data_ingestion.web_scraping import *
-from data_processing.data_cleaning import clean_data, convert_date_format
+from data_processing.data_cleaning import clean_data
 from data_processing.data_transformation import transform_data
 from data_storage.database import connect_to_db, insert_data, get_all_transactions, create_tables
-from pyspark.sql.functions import col, count, when
+from data_storage.save_data import save_data_to_parquet, save_data_to_csv
 
 
 def main():
@@ -46,14 +46,17 @@ def main():
     get_all_transactions()
     conn.close()
 
+    print("\nSave data to files\n")
+    save_data_to_parquet(apple_data_spark, 'apple_stock_data.parquet')
+    save_data_to_csv(apple_data_spark, 'apple_stock_data.csv')
+
     print("\nData analysis\n")
     apple_data_pandas = apple_data_spark.select("*").toPandas()
     print(analyze_stock_performance(apple_data_pandas))
     print(find_correlations(apple_data_pandas))
 
     print("\nData visualization\n")
-    plot_stock_data(apple_data_pandas)
-    plot_volume_trends(apple_data_pandas)
+    plot_data(apple_data_pandas)
 
 
 if __name__ == "__main__":
