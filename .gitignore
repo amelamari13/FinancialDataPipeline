@@ -1,0 +1,21 @@
+# Environnement virtuel
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Données générées par le pipeline
+data/raw/
+data/staging/
+financial_data.db
+
+# Test Docker Compose (scratch local)
+airflow_docker/
+
+# Secrets / config locale
+.env
+
+# PyCharm
+.idea/

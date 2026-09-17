@@ -1,0 +1,1 @@
+YAHOO_FINANCE_BASE_URL = 'https://finance.yahoo.com'
